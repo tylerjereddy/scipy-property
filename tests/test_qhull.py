@@ -31,6 +31,11 @@ def test_hull_good(generators, incremental_gen, QG_index):
             actual = hull.good
             # the good array must be of type bool when QG is used
             assert actual.dtype == np.dtype(np.bool)
+            # we must have at least three facets in the visility array
+            # since the convex hull must be at least a triangle
+            assert actual.size >= 3
+            # the good array is also confined to a single dimension
+            assert actual.ndim == 1
         except QhullError:
             # relatively easy to provide input generators that aren't
             # in general position, so we ignore QhullError for now
